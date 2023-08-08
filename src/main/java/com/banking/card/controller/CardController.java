@@ -1,15 +1,18 @@
 package com.banking.card.controller;
 
-import java.util.List;
-
+import com.banking.card.config.CardServiceConfig;
 import com.banking.card.enitity.Card;
 import com.banking.card.enitity.Customer;
+import com.banking.card.enitity.Properties;
 import com.banking.card.repo.CardRepo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -18,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/card-service")
 public class CardController {
 
-    @Autowired
-    private CardRepo cardsRepository;
+    private final CardRepo cardsRepository;
+    private final CardServiceConfig cardServiceConfig;
 
     @PostMapping("/myCards")
     public List<Card> getCardDetails(@RequestBody Customer customer) {
@@ -35,4 +40,11 @@ public class CardController {
 
     }
 
+    @GetMapping("/properties")
+    public String getPropertyDetails() throws JsonProcessingException {
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        Properties properties = new Properties(cardServiceConfig.getMsg(), cardServiceConfig.getBuildVersion(), cardServiceConfig.getMailDetails(), cardServiceConfig.getActiveBranches());
+        String jsonProperties = objectWriter.writeValueAsString(properties);
+        return jsonProperties;
+    }
 }
