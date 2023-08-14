@@ -15,10 +15,10 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "card_id")
-    private int cardId;
+    private long cardId;
 
     @Column(name = "customer_id")
-    private int customerId;
+    private long customerId;
 
     @Column(name = "card_number")
     private String cardNumber;

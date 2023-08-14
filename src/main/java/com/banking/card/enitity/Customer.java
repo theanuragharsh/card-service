@@ -10,6 +10,6 @@ import lombok.ToString;
 @ToString
 public class Customer {
 
-    private int customerId;
+    private long customerId;
 
 }

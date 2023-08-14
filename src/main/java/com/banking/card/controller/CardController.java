@@ -40,6 +40,18 @@ public class CardController {
 
     }
 
+    @GetMapping("/{customerId}")
+    public List<Card> getLoansDetailsByCustomerId(@PathVariable Long customerId) {
+        log.debug("inside card-service : fetching loan details for customerId: {}", customerId);
+        try {
+            Thread.sleep(30000);
+            return List.of(cardsRepository.findById(customerId).get());
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+        }
+        return List.of(cardsRepository.findById(customerId).get());
+    }
+
     @GetMapping("/properties")
     public String getPropertyDetails() throws JsonProcessingException {
         ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
