@@ -37,7 +37,6 @@ public class CardController {
         } else {
             return null;
         }
-
     }
 
     @GetMapping("/{customerId}")
