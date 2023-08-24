@@ -44,11 +44,11 @@ public class CardController {
         log.debug("inside card-service : fetching loan details for customerId: {}", customerId);
         try {
             Thread.sleep(30000);
-            return List.of(cardsRepository.findById(customerId).get());
+            return cardsRepository.findByCustomerId(customerId);
         } catch (InterruptedException e) {
             log.error(e.getMessage());
         }
-        return List.of(cardsRepository.findById(customerId).get());
+        return cardsRepository.findByCustomerId(customerId);
     }
 
     @GetMapping("/properties")
