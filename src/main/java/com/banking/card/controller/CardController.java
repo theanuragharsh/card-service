@@ -30,13 +30,11 @@ public class CardController {
 
     @PostMapping("/myCards")
     public List<Card> getCardDetails(@RequestBody Customer customer) {
+        log.info("invoking card-service..");
         List<Card> cards = cardsRepository.findByCustomerId(customer.getCustomerId());
-        if (cards != null) {
-            log.info(String.format("Inside Card-Service : %s", cards.toString()));
-            return cards;
-        } else {
-            return null;
-        }
+        if (cards != null)
+            log.info(String.format("Card Details Fetched : %s", cards.toString()));
+        return cards;
     }
 
     @GetMapping("/{customerId}")
